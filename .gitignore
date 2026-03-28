@@ -1,0 +1,17 @@
+# Secrets & local overrides (never commit)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+node_modules/
+.next/
+__pycache__/
+*.pyc
+.venv/
+backend/.venv/
+venv/
+virtual/
+*.egg-info/
+dist/
+.DS_Store

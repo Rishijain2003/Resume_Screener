@@ -1,0 +1,56 @@
+Sprinto AI Implementation Intern - Assignment
+1. Objective
+Build a functional AI application that automates the initial screening and ranking of resumes
+against specific Job Descriptions (JDs). We are looking for a solution that demonstrates your
+ability to integrate LLMs with practical business workflows and handle unstructured data.
+2. The Challenge
+Recruiters at Sprinto often deal with high volumes of resumes. Your task is to build a "Resume
+Screener" that parses documents, extracts key information based on configurable parameters,
+and scores candidates based on their fit for a role.
+A. Minimum Requirements (Must-Haves)
+To pass the initial evaluation, your application must include:
+● Multi-Format Support: Successfully ingest and parse both .pdf and .docx files.
+● Dynamic Extraction: Extract a set of parameters from the resume (e.g., Name, Years of
+Experience, Primary Skills, Last Job Title).
+● Configurability: Allow the user to define or modify which parameters should be
+extracted via a UI or a configuration file.
+● AI Scoring & Justification: Compare a resume against a provided JD and generate a
+fit score (1–10) with a brief summary of the decision.
+● Duplicate Detection: Flag if a resume has already been uploaded for the same role.
+● Live Deployment: Provide a URL to a working version.
+B. Enhanced Features (Good-to-Haves)
+● Batch Re-parsing: The ability to trigger a "re-scan" of already uploaded resumes if
+extraction parameters are updated.
+● Multi-Role Ranking: The ability to take one resume and see how it ranks against
+multiple different JDs simultaneously.
+● RAG Implementation: Using Vector embeddings to find the most relevant
+projects/experience within a resume that match a specific JD requirement.
+
+
+
+
+3. Submission Guidelines
+● Codebase: Link to a public GitHub repository or the automation workflow with a clear
+README.md and setup instructions.
+● Demo: A link to the live application or a Loom video (under 3 mins) demonstrating the
+end-to-end workflow.
+● Documentation: A brief system architecture note explaining your choice of LLM, your
+prompting strategy, how you handled file parsing and how you went about building it all.
+4. Evaluation Rubric
+Criteria Weight What We Are Looking For
+Functionality 40% Does it parse files and score
+accurately? Does it handle
+edge cases like corrupted
+PDFs?
+AI/Prompt Engineering 20% Quality of extraction logic.
+Are justifications helpful or
+generic?
+Bias Toward Shipping 20% How quickly did you get to a
+"Live" state? We value
+prototypes over polished
+plans.
+Documentation 10% Is the logic documented well
+enough for another team
+member to maintain it?
+Ambiguity Handling 10% How did you handle items not
+explicitly defined in the brief?

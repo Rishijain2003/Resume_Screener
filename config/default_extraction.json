@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "fields": [
+    {
+      "key": "name",
+      "label": "Name",
+      "type": "string",
+      "description": "Candidate full name from the resume header."
+    },
+    {
+      "key": "age",
+      "label": "Age",
+      "type": "number",
+      "description": "Approximate age if inferable from dates or stated; otherwise null."
+    },
+    {
+      "key": "years_of_experience",
+      "label": "Years of experience",
+      "type": "number",
+      "description": "Total professional years of experience (numeric)."
+    },
+    {
+      "key": "last_job_profile",
+      "label": "Last job profile",
+      "type": "string",
+      "description": "Most recent job title and short summary of that role."
+    },
+    {
+      "key": "education_summary",
+      "label": "Education summary",
+      "type": "string",
+      "description": "Highest degree and institution in one line."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "description": "Role templates aligned with scripts/seed_roles.py. Import in screening to pre-fill JD and extraction fields.",
+  "templates": [
+    {
+      "role_name": "Backend Engineer",
+      "jd_description": "Build and maintain reliable APIs and services. Strong Python (FastAPI or similar), SQL/Postgres, REST design, automated testing, and production deployments. Bonus: experience with LLM APIs, async I/O, or high-throughput data pipelines.",
+      "extraction_fields": [
+        { "key": "name", "label": "Name", "type": "string", "description": "Candidate full name from the resume header." },
+        { "key": "age", "label": "Age", "type": "number", "description": "Approximate age if inferable; otherwise null." },
+        { "key": "years_of_experience", "label": "Years of experience", "type": "number", "description": "Total professional years of experience." },
+        { "key": "last_job_profile", "label": "Last job profile", "type": "string", "description": "Most recent job title and short summary." },
+        { "key": "education_summary", "label": "Education summary", "type": "string", "description": "Highest degree and institution in one line." }
+      ]
+    },
+    {
+      "role_name": "Frontend Engineer",
+      "jd_description": "Craft fast, accessible web experiences in React and TypeScript. Solid HTML/CSS, component design, state management, and performance tuning. You collaborate closely with design and backend teams to ship polished UIs.",
+      "extraction_fields": [
+        { "key": "name", "label": "Name", "type": "string", "description": "Candidate full name from the resume header." },
+        { "key": "age", "label": "Age", "type": "number", "description": "Approximate age if inferable; otherwise null." },
+        { "key": "years_of_experience", "label": "Years of experience", "type": "number", "description": "Total professional years of experience." },
+        { "key": "last_job_profile", "label": "Last job profile", "type": "string", "description": "Most recent job title and short summary." },
+        { "key": "education_summary", "label": "Education summary", "type": "string", "description": "Highest degree and institution in one line." }
+      ]
+    },
+    {
+      "role_name": "Senior Backend Engineer",
+      "jd_description": "Lead design and delivery of scalable backend systems. Deep experience with distributed services, databases, caching, observability, and production incidents. Mentor engineers, drive technical direction, and improve reliability and security.",
+      "extraction_fields": [
+        { "key": "name", "label": "Name", "type": "string", "description": "Candidate full name from the resume header." },
+        { "key": "age", "label": "Age", "type": "number", "description": "Approximate age if inferable; otherwise null." },
+        { "key": "years_of_experience", "label": "Years of experience", "type": "number", "description": "Total professional years of experience." },
+        { "key": "last_job_profile", "label": "Last job profile", "type": "string", "description": "Most recent job title and short summary." },
+        { "key": "education_summary", "label": "Education summary", "type": "string", "description": "Highest degree and institution in one line." }
+      ]
+    },
+    {
+      "role_name": "AI Implementation Engineer",
+      "jd_description": "Ship LLM-powered product features end-to-end: retrieval/RAG, evaluations, prompt design, guardrails, and safe rollout. Strong Python, OpenAI or similar APIs, embeddings, and pragmatic MLOps for production workloads.",
+      "extraction_fields": [
+        { "key": "name", "label": "Name", "type": "string", "description": "Candidate full name from the resume header." },
+        { "key": "age", "label": "Age", "type": "number", "description": "Approximate age if inferable; otherwise null." },
+        { "key": "years_of_experience", "label": "Years of experience", "type": "number", "description": "Total professional years of experience." },
+        { "key": "last_job_profile", "label": "Last job profile", "type": "string", "description": "Most recent job title and short summary." },
+        { "key": "education_summary", "label": "Education summary", "type": "string", "description": "Highest degree and institution in one line." }
+      ]
+    },
+    {
+      "role_name": "HR Head",
+      "jd_description": "Lead people strategy and operations: talent acquisition, onboarding, policies, employee relations, and compliance. Partner with leadership on org design, culture, and scaling HR programs in a growing technology company.",
+      "extraction_fields": [
+        { "key": "name", "label": "Name", "type": "string", "description": "Candidate full name from the resume header." },
+        { "key": "age", "label": "Age", "type": "number", "description": "Approximate age if inferable; otherwise null." },
+        { "key": "years_of_experience", "label": "Years of experience", "type": "number", "description": "Total professional years of experience." },
+        { "key": "last_job_profile", "label": "Last job profile", "type": "string", "description": "Most recent job title and short summary." },
+        { "key": "education_summary", "label": "Education summary", "type": "string", "description": "Highest degree and institution in one line." }
+      ]
+    }
+  ]
+}

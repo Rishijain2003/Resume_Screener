@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply min-h-screen text-slate-100 antialiased;
+  background-color: #070b14;
+  background-image:
+    radial-gradient(ellipse 100% 70% at 50% -25%, rgba(56, 189, 248, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 100% 0%, rgba(139, 92, 246, 0.1), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 0% 80%, rgba(52, 211, 153, 0.06), transparent 45%),
+    linear-gradient(180deg, #0b1020 0%, #070b14 35%, #060912 100%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400;
+  }
+  .field-control {
+    @apply w-full rounded-lg border-2 border-slate-600/80 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-100 shadow-inner transition-colors placeholder:text-slate-500;
+    @apply focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/25;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .field-control-select {
+    @apply w-full cursor-pointer rounded-lg border-2 border-slate-600/80 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-100 shadow-inner transition-colors placeholder:text-slate-500;
+    @apply focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/25;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-neutral {
+    @apply btn border-2 border-slate-600 bg-slate-800/80 text-slate-100 hover:border-slate-500 hover:bg-slate-700/90 focus:ring-slate-500;
+  }
+  .btn-primary {
+    @apply btn border-2 border-cyan-500/60 bg-cyan-600/90 text-white hover:bg-cyan-500 focus:ring-cyan-400;
+  }
+  .btn-accent {
+    @apply btn border-2 border-violet-500/50 bg-violet-600/90 text-white hover:bg-violet-500 focus:ring-violet-400;
+  }
+  .btn-danger {
+    @apply btn border-2 border-rose-600/50 bg-rose-950/60 text-rose-100 hover:bg-rose-900/70 focus:ring-rose-500;
+  }
+  .btn-ghost {
+    @apply btn border-2 border-transparent bg-transparent text-slate-300 hover:bg-slate-800/80 focus:ring-slate-500;
+  }
+  .upload-tile {
+    @apply flex cursor-pointer flex-col gap-1 rounded-xl border-2 border-dashed border-slate-600 bg-slate-950/50 px-5 py-4 text-sm transition-all hover:border-cyan-500/50 hover:bg-cyan-950/20;
+  }
+  .upload-tile-mint {
+    @apply upload-tile hover:border-emerald-500/50 hover:bg-emerald-950/20;
+  }
+}
