@@ -2,6 +2,7 @@ import json
 import logging
 import re
 from io import BytesIO
+from pathlib import Path
 from uuid import UUID
 
 import asyncpg
@@ -22,7 +23,7 @@ from app.schemas.dto import (
     UploadResponse,
 )
 from app.services.hashing import sha256_bytes
-from app.services.parsing import ParseError
+from app.services.parsing import ParseError, extract_text
 from app.services.pipeline import (
     CandidateNotFoundError,
     extract_candidate_fields,
@@ -214,6 +215,22 @@ async def upload_resume(
         raise HTTPException(status_code=400, detail="Empty file")
     logger.info("POST /upload read %d byte(s) from client", len(data))
 
+    upload_name = file.filename or "resume.bin"
+    suffix = Path(upload_name).suffix.lower()
+    if suffix in (".pdf", ".docx"):
+        try:
+            parsed_text = extract_text(upload_name, data)
+        except ParseError as e:
+            logger.warning("POST /upload parse rejected filename=%r: %s", upload_name, e)
+            raise HTTPException(status_code=400, detail=str(e)) from e
+        if not parsed_text.strip():
+            msg = (
+                "This file has no readable text. It may be empty, or contain only image-based (scanned) "
+                "text that could not be extracted."
+            )
+            logger.warning("POST /upload no extractable text filename=%r", upload_name)
+            raise HTTPException(status_code=400, detail=msg)
+
     actual = sha256_bytes(data)
     existing = await pool.fetchrow(
         "SELECT id FROM candidates WHERE role_id = $1 AND actual_hash = $2",
@@ -238,7 +255,6 @@ async def upload_resume(
     cfg_json = _upload_config_json(extraction_config)
     logger.info("POST /upload config_snapshot field count=%d", len(_cfg_fields(cfg_json)))
 
-    upload_name = file.filename or "resume.bin"
     try:
         file_id = await gridfs.upload_from_stream(
             upload_name,

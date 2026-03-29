@@ -32,6 +32,26 @@ function buildExtractionConfig(fields: ExtractionField[]) {
   return { version: 1, fields: fields.filter((f) => f.key.trim() && f.label.trim()) };
 }
 
+function messageFromApiError(error: unknown): string {
+  const raw = String(error);
+  try {
+    const o = JSON.parse(raw) as { detail?: unknown };
+    if (typeof o.detail === "string") return o.detail;
+    if (Array.isArray(o.detail)) {
+      return o.detail
+        .map((item) =>
+          typeof item === "object" && item !== null && "msg" in item
+            ? String((item as { msg: string }).msg)
+            : String(item),
+        )
+        .join(" ");
+    }
+  } catch {
+    /* ignore */
+  }
+  return raw;
+}
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 /** Per-role extraction variables: browser-only (not stored on `roles` in Postgres). */
@@ -641,7 +661,9 @@ export default function Home() {
       void refreshApplicantCounts();
       if (pageView === "library") void goLibrary(libraryRoleFilter);
     } catch (e) {
-      toast.error(String(e));
+      const msg = messageFromApiError(e);
+      setErr(msg);
+      alert(msg);
     } finally {
       setBusy(false);
     }
@@ -696,10 +718,10 @@ export default function Home() {
       setExtractDetail(updated);
       await refreshResults();
     } catch (e) {
-      const msg = String(e);
+      const msg = messageFromApiError(e);
       setExtractDetail(null);
       setErr(msg);
-      toast.error(msg);
+      alert(msg);
     } finally {
       setBusy(false);
     }

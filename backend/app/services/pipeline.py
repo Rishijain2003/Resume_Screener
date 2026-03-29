@@ -18,6 +18,24 @@ class CandidateNotFoundError(Exception):
     pass
 
 
+def _extracted_values_all_empty(extracted: dict) -> bool:
+    if not extracted:
+        return True
+    for v in extracted.values():
+        if v is None:
+            continue
+        if v is False:
+            return False
+        if v == "":
+            continue
+        if v == [] or v == {}:
+            continue
+        if isinstance(v, str) and not v.strip():
+            continue
+        return False
+    return True
+
+
 def _pg_extracted_dict(ed) -> dict:
     if isinstance(ed, str):
         return json.loads(ed)
@@ -84,11 +102,36 @@ async def extract_candidate_fields(
         )
         raise
 
+    if not text.strip():
+        msg = (
+            "This file has no readable text. It may be empty, or contain only image-based (scanned) "
+            "text that could not be extracted."
+        )
+        await pool.execute(
+            "UPDATE candidates SET parse_status = 'failed', error_message = $2, updated_at = NOW() WHERE id = $1",
+            cid,
+            msg,
+        )
+        raise ParseError(msg)
+
     preview = text[:4000]
     extracted = await llm_extract.extract_resume_fields(settings, text, fields)
+    if not isinstance(extracted, dict):
+        extracted = {}
+    if _extracted_values_all_empty(extracted):
+        msg = (
+            "This file has no extracted values: it may contain no text data, or only image-based "
+            "(scanned) text that could not be read as text."
+        )
+        await pool.execute(
+            "UPDATE candidates SET parse_status = 'failed', error_message = $2, updated_at = NOW() WHERE id = $1",
+            cid,
+            msg,
+        )
+        raise RuntimeError(msg)
+
     name = None
-    if isinstance(extracted, dict):
-        name = extracted.get("full_name") or extracted.get("name")
+    name = extracted.get("full_name") or extracted.get("name")
 
     norm = simhash_hex(text)
     warn = await _fetch_near_duplicate_warning(

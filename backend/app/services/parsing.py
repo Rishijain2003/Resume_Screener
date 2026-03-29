@@ -18,7 +18,7 @@ def extract_text_from_pdf(data: bytes) -> str:
         doc = fitz.open(stream=data, filetype="pdf")
     except Exception as e:
         logger.warning("parsing PDF open failed: %s", e)
-        raise ParseError(f"Invalid or corrupted PDF: {e}") from e
+        raise ParseError("The PDF is corrupted or invalid and could not be read.") from e
     parts: list[str] = []
     try:
         n_pages = len(doc)
@@ -37,7 +37,7 @@ def extract_text_from_docx(data: bytes) -> str:
         document = Document(io.BytesIO(data))
     except Exception as e:
         logger.warning("parsing DOCX open failed: %s", e)
-        raise ParseError(f"Invalid or corrupted DOCX: {e}") from e
+        raise ParseError("The document is corrupted or invalid and could not be read.") from e
     paras = [p.text for p in document.paragraphs if p.text and p.text.strip()]
     text = "\n".join(paras).strip()
     logger.debug("parsing DOCX OK chars=%d", len(text))
