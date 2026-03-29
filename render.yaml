@@ -1,0 +1,46 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# After the first deploy, set CORS_ALLOW_ORIGINS on the API service to your UI URL
+# (e.g. https://resume-screener-ui.onrender.com). Secrets use sync: false — enter in Dashboard.
+
+services:
+  - type: web
+    name: resume-screener-api
+    runtime: python
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: SUPABASE_URI
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: OPENAI_EMBEDDING_MODEL
+        value: text-embedding-3-small
+      - key: MONGO_TLS_DISABLE_OCSP_CHECK
+        value: "true"
+      - key: CORS_ALLOW_ORIGINS
+        sync: false
+      - key: LOG_LEVEL
+        value: INFO
+
+  - type: web
+    name: resume-screener-ui
+    runtime: node
+    region: oregon
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: resume-screener-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
