@@ -6,6 +6,7 @@
 .env.test
 node_modules/
 .next/
+frontend/out/
 __pycache__/
 *.pyc
 .venv/
